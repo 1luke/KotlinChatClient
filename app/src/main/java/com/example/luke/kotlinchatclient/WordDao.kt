@@ -1,5 +1,6 @@
 package com.example.luke.kotlinchatclient
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -11,7 +12,7 @@ interface WordDao {
     fun insert(word: Word)
 
     @Query("SELECT * from word ORDER BY word ASC")
-    fun allWords(): List<Word>
+    fun allWords(): LiveData<List<Word>>
 
     @Query("DELETE FROM word")
     fun deleteAll()
