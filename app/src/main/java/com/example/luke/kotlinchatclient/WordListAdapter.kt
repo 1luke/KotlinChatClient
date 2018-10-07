@@ -1,11 +1,14 @@
 package com.example.luke.kotlinchatclient
 
 import android.content.Context
+import android.support.v4.widget.ImageViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import org.w3c.dom.Text
 
 class WordListAdapter internal constructor(val context: Context):
         RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
@@ -14,7 +17,12 @@ class WordListAdapter internal constructor(val context: Context):
     private var words = mutableListOf<Word>(Word("Hello"), Word("World!"))
 
     inner class WordViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val wordItemView: TextView = itemView.findViewById(R.id.textView)
+        val wordItemView: TextView = itemView.findViewById(R.id.name)
+        val initialsTextView: TextView = itemView.findViewById(R.id.name_initials)
+        val avatarImageView: ImageView = itemView.findViewById(R.id.avatar)
+        val previewTextView: TextView = itemView.findViewById(R.id.preview)
+        val seenIndicator: ImageView = itemView.findViewById(R.id.seen)
+        val lastSeenTextView: TextView = itemView.findViewById(R.id.last_seen)
     }
 
     // MARK: RecyclerView.Adapter
@@ -29,6 +37,11 @@ class WordListAdapter internal constructor(val context: Context):
     /// willDisplayCell
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         holder.wordItemView.text = words[position].word
+        holder.initialsTextView.text = ""
+        holder.previewTextView.text = "some last message..."
+        holder.lastSeenTextView.text = "Today at: 08"
+        holder.avatarImageView.setImageResource(R.drawable.placeholder_avatar)
+        holder.seenIndicator.setImageResource(R.drawable.ic_check_black_24dp)
     }
 
     /// numberOfItems
