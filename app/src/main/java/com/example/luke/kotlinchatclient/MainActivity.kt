@@ -2,11 +2,9 @@ package com.example.luke.kotlinchatclient
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -26,10 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewWordActivity::class.java)
-            startActivityForResult(intent, newWordActivityRequestCode)
-        }
+        addButton.setOnClickListener { startNewWordActivity() }
 
         setupRecyclerView()
         setupViewModel()
@@ -53,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+        if (resultCode.isActivityResultOk && requestCode.isNewActivityStatusCode) {
             data?.let {
                 val word = Word(it.getStringExtra(NewWordActivity.EXTRA_REPLY))
                 wordViewModel.insert(word)
@@ -81,8 +76,23 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    companion object {
-        const val newWordActivityRequestCode = 1
-    }
 }
+
+fun AppCompatActivity.startNewWordActivity() {
+    startActivityForResult(
+            Intent(this, NewWordActivity::class.java),
+            ActivityRequestCode.NewWordActivity.ordinal
+    )
+}
+
+// MARK: Helpers (TODO: Move to separate file)
+
+/// Returns true if status code is `Activity.RESULT_OK`
+val Int.isActivityResultOk: Boolean get() = this == Activity.RESULT_OK
+
+/// List of App's activity request codes
+enum class ActivityRequestCode {
+    NewWordActivity
+}
+
+val Int.isNewActivityStatusCode: Boolean get() = this == ActivityRequestCode.NewWordActivity.ordinal
