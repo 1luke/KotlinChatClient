@@ -11,7 +11,7 @@ class WordListAdapter internal constructor(val context: Context):
         RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
 
     // Cache
-    private var words = emptyList<Word>()
+    private var words = mutableListOf<Word>(Word("Hello"), Word("World!"))
 
     inner class WordViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val wordItemView: TextView = itemView.findViewById(R.id.textView)
@@ -37,7 +37,7 @@ class WordListAdapter internal constructor(val context: Context):
     // MARK: Internal
 
     internal fun setWords(words: List<Word>) {
-        this.words = words
+        this.words = words.toMutableList()
         notifyDataSetChanged()
     }
 }
