@@ -1,6 +1,9 @@
 package com.example.luke.kotlinchatclient
 
 import android.arch.persistence.room.*
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "messages")
 data class Message(@PrimaryKey
@@ -12,14 +15,6 @@ data class Message(@PrimaryKey
                    val sender: String
 )
 
-@Dao
-interface MessageDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(message: Message)
-
-    @Query("SELECT * from messages ORDER BY timestamp ASC")
-    fun messages(): List<Message>
-
-    @Query("SELECT * FROM messages")
-    fun deleteAll()
+fun mockMessage(id: String): Message {
+    return Message(id, Date().time, "message", "Mock message", "sender1", "Sender Name")
 }
