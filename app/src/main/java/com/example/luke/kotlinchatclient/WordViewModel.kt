@@ -10,7 +10,8 @@ import kotlin.coroutines.experimental.CoroutineContext
 class WordViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: WordRepository
-    private val allWords: LiveData<List<Word>>
+
+    val allWords: LiveData<List<Word>>
 
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext get() = parentJob + Dispatchers.Main
