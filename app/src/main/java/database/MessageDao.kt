@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query
 
 @Dao
 interface MessageDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(message: Message)
 
     @Query("SELECT * from messages ORDER BY timestamp ASC")

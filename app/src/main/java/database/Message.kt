@@ -3,6 +3,7 @@ package com.example.luke.kotlinchatclient
 import android.arch.persistence.room.*
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "messages")
@@ -11,12 +12,13 @@ data class Message(@PrimaryKey
                    val timestamp: Long,
                    val type: String,
                    val content: String,
-                   val senderId: String,
                    val sender: String
-)
+): Serializable
 
 fun mockMessage(id: String): Message {
-    return Message(id, Date().time, "message", "Mock message", "sender1", "Sender Name")
+    return Message(id, Date().time, "message",
+            "Mock message aldfak fal akfa dfka dfakdf adkf akdf adfadfafafadfasdfasdfa wawefae",
+            "Sender Name")
 }
 
 val Message.previewText: String get() {
@@ -31,5 +33,5 @@ val Message.senderInitials: String get() {
 
 val Message.lastSeen: String get() {
     // TODO: Format timestamp.
-    return "At: $timestamp"
+    return "Today at: 09"
 }

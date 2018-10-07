@@ -50,7 +50,7 @@ class MessageListAdapter internal constructor(val context: Context):
 
     // MARK: Internal
 
-    internal fun setWords(words: List<Word>) {
+    internal fun updateMessages(messages: List<Message>) {
         this.messages = messages
         notifyDataSetChanged()
     }
