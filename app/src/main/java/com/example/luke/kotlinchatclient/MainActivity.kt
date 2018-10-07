@@ -14,7 +14,6 @@ import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         if (resultCode.isActivityResultOk && requestCode.isNewActivityStatusCode) {
             data?.let {
-                val message: Message = data.getSerializableExtra(NewWordActivity.EXTRA_REPLY) as Message
+                val message: Message = data.getSerializableExtra(ComposeActivity.EXTRA_REPLY) as Message
                 chatViewModel.insert(message)
             }
         } else {
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 fun AppCompatActivity.startNewWordActivity() {
     startActivityForResult(
-            Intent(this, NewWordActivity::class.java),
+            Intent(this, ComposeActivity::class.java),
             ActivityRequestCode.NewWordActivity.ordinal
     )
 }

@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import java.util.*
 
-class NewWordActivity : AppCompatActivity() {
+class ComposeActivity : AppCompatActivity() {
 
     private lateinit var contentEditText: EditText
     private lateinit var nameEditText: EditText
