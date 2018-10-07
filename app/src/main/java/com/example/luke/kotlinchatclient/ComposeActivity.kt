@@ -16,14 +16,14 @@ class ComposeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_word)
+        setContentView(R.layout.activity_compose)
         title = "Compose message"
 
         contentEditText = findViewById(R.id.message_field)
         nameEditText = findViewById(R.id.name_field)
 
-        val saveButton = findViewById<Button>(R.id.button_save)
-        saveButton.setOnClickListener {
+        val sendButton = findViewById<Button>(R.id.button_send)
+        sendButton.setOnClickListener {
             val replyIntent = Intent()
             if (TextUtils.isEmpty(contentEditText.text) || TextUtils.isEmpty(nameEditText.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
