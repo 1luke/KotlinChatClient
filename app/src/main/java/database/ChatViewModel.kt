@@ -10,7 +10,6 @@ import kotlin.coroutines.experimental.CoroutineContext
 class ChatViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: ChatRepository
-
     val messages: LiveData<List<Message>>
 
     private var parentJob = Job()
@@ -23,7 +22,7 @@ class ChatViewModel(application: Application): AndroidViewModel(application) {
         messages = repository.messages
     }
 
-    // implementation of insert() is completely hidden from the UI. We want the insert()
+    // Implementation of insert() is completely hidden from the UI. We want the insert()
     // method to be called away from the main thread, so we're launching a new coroutine,
     // based on the coroutine scope defined previously. Because we're doing a database
     // operation, we're using the IO Dispatcher.
