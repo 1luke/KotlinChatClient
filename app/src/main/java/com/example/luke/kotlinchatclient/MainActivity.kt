@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var wordViewModel: WordViewModel
+    private lateinit var chatViewModel: ChatViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        title = "Chat"
 
         addButton.setOnClickListener { startNewWordActivity() }
 
@@ -31,9 +32,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        wordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
-        wordViewModel.allWords.observe(this, Observer { words ->
-            (recyclerview.adapter as WordListAdapter).setWords(words ?: emptyList<Word>())
+        chatViewModel = ViewModelProviders.of(this).get(ChatViewModel::class.java)
+        chatViewModel.messages.observe(this, Observer { messages ->
+            (recyclerview.adapter as? MessageListAdapter)
+                    ?.updateMessages(messages ?: emptyList<Message>())
         })
     }
 
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Set data source
-        recyclerView.adapter = WordListAdapter(this)
+        recyclerView.adapter = MessageListAdapter(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -50,14 +52,11 @@ class MainActivity : AppCompatActivity() {
 
         if (resultCode.isActivityResultOk && requestCode.isNewActivityStatusCode) {
             data?.let {
-                val word = Word(it.getStringExtra(NewWordActivity.EXTRA_REPLY))
-                wordViewModel.insert(word)
+                val message: Message = data.getSerializableExtra(ComposeActivity.EXTRA_REPLY) as Message
+                chatViewModel.insert(message)
             }
         } else {
-            Toast.makeText(
-                    applicationContext,
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, R.string.empty_not_saved, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 fun AppCompatActivity.startNewWordActivity() {
     startActivityForResult(
-            Intent(this, NewWordActivity::class.java),
+            Intent(this, ComposeActivity::class.java),
             ActivityRequestCode.NewWordActivity.ordinal
     )
 }

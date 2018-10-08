@@ -10,47 +10,46 @@ import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.IO
 import kotlinx.coroutines.experimental.launch
 
-@Database(entities = [Word::class], version = 1)
-public abstract class WordDatabase: RoomDatabase() {
-    abstract fun wordDao(): WordDao
+@Database(entities = [Message::class], version = 1)
+public abstract class ChatDatabase: RoomDatabase() {
+    abstract fun messageDao(): MessageDao
 
     /// Singleton
     companion object {
         @Volatile
-        private var INSTANCE: WordDatabase? = null
+        private var INSTANCE: ChatDatabase? = null
 
         // Note: onOpen() launches a coroutine on the IO Dispatcher.
         // To launch a coroutine we need a CoroutineScope.
         // Require a coroutine scope as parameter
-        fun database(context: Context, scope: CoroutineScope): WordDatabase {
+        fun database(context: Context, scope: CoroutineScope): ChatDatabase {
             return  INSTANCE ?: synchronized(this) {
                 val db = Room.databaseBuilder(
                         context.applicationContext,
-                        WordDatabase::class.java,
-                        "word_database")
-                        .addCallback(WordDatabaseCallback(scope))
+                        ChatDatabase::class.java,
+                        "chat_database")
+                        .addCallback(ChatDatabaseCallback(scope))
                         .build()
                 db
             }
         }
     }
 
-    private class WordDatabaseCallback(private val scope: CoroutineScope): RoomDatabase.Callback() {
+    private class ChatDatabaseCallback(private val scope: CoroutineScope): RoomDatabase.Callback() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    populate(database.wordDao())
+                    populate(database.messageDao())
                 }
             }
         }
 
-        private fun populate(wordDao: WordDao) {
-            wordDao.deleteAll()
-
+        private fun populate(messageDao: MessageDao) {
+            messageDao.deleteAll()
             for(i in 1..10){
-                wordDao.insert(Word("Word: $i"))
+                messageDao.insert(mockMessage("$i"))
             }
         }
     }

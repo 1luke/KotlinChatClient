@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="216dp"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:id="@+id/InnerRelativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <EditText
+                android:id="@+id/message_field"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="top"
+                android:hint="Enter message"
+                android:inputType="text"
+                android:lines="5"
+                android:singleLine="false"></EditText>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:ems="10"
+        android:hint="Username:"
+        android:inputType="textPersonName" />
+
+    <TableLayout android:id="@+id/recipeButtons"
+    android:background="#B0B0B0" android:padding="3dip"
+    android:stretchColumns="0,1" android:layout_alignParentBottom="true"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <TableRow android:gravity="center">
+        <Button android:id="@+id/button_send"
+            android:text="Send
+" />
+
+        <Button
+            android:id="@+id/button_discard"
+            android:text="Discard" />
+    </TableRow>
+</TableLayout></LinearLayout>
