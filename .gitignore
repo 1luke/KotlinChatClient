@@ -1,5 +1,7 @@
+app/src/main/java/database/Private.kt
 # Windows thumbnail db
 Thumbs.db
+Private.kt
 
 # OSX files
 .DS_Store
