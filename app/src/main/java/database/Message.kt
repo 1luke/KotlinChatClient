@@ -8,15 +8,15 @@ import java.util.*
 
 @Entity(tableName = "messages")
 data class Message(@PrimaryKey
-                   val id: String,
-                   val timestamp: Long,
+                   val id: Long,
+                   val timestamp: String,
                    val type: String,
                    val content: String,
                    val sender: String
 ): Serializable
 
 fun mockMessage(id: String): Message {
-    return Message(id, Date().time, "message",
+    return Message(Date().time, "Time:", "message",
             "Mock message aldfak fal akfa dfka dfakdf adkf akdf adfadfafafadfasdfasdfa wawefae",
             "Sender Name")
 }

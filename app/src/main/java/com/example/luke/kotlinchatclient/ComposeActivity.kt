@@ -29,8 +29,7 @@ class ComposeActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val content = contentEditText.text.toString()
-                val name = nameEditText.text.toString()
-                val message = Message("$name", Date().time, "type", "$content", "$name")
+                val message = Message(Date().time, Date().time.toString(), "type", "$content", "Me")
 
                 replyIntent.putExtra(EXTRA_REPLY, message)
                 setResult(Activity.RESULT_OK, replyIntent)
